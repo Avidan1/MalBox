@@ -23,7 +23,7 @@ The system is built with a **decoupled, microservices-oriented architecture** to
 
 ### Prerequisites
 - Docker Desktop (with WSL2 backend on Windows)
-- Python 3.9+
+- Python 3.13+
 - Redis (Handled via Docker Compose)
 
 ### Installation & Running
