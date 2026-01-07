@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # Redis Service
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  # Worker Service
+  worker:
+    build: .
+    container_name: malware-worker
+    environment:
+      - REDIS_HOST=redis # Here we use the service name 'redis' instead of host.docker.internal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./uploads:/app/uploads
+    depends_on:
+      - redis
+
+# Note: In Docker Compose, services on the same network can talk 
+# to each other using their service names (e.g., 'redis').
