@@ -19,7 +19,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 async def analyze_file(file: UploadFile = File(...)):
     # 1. Save file temporarily
     file_id = str(uuid.uuid4())
-    filename = f"{file_id}_{file.filename}"
+    # Extract extension from the original filename and append it
+    _, ext = os.path.splitext(file.filename)
+    filename = f"{file_id}{ext}"
     file_path = os.path.abspath(os.path.join(UPLOAD_DIR, filename)).replace("\\", "/")
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
