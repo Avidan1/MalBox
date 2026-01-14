@@ -2,7 +2,7 @@ import docker
 import uuid
 
 client = docker.from_env()
-
+# BASE START SCAN ONLY PYTHON FILES
 def run_in_sandbox(host_path: str):
     """
     host_path is the absolute path on the Windows Host
@@ -17,7 +17,7 @@ def run_in_sandbox(host_path: str):
 
     try:
         container = client.containers.run(
-            image="python:3.9-slim",
+            image="python:3.13-slim",
             command=["python", f"/app/{file_name}"],
             volumes={
                 host_dir: { # This is the Windows path that Docker Engine understands

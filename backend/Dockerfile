@@ -1,20 +1,22 @@
-# Use a more modern Python image (3.11) to support newer dependencies
-FROM python:3.11-slim
+# Use a modern Python image
+FROM python:3.13-slim
 
-# Set the working directory inside the container
+# Install uv inside the container
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 WORKDIR /app
 
-# Copy the requirements first
-COPY requirements.txt .
+# Copy dependency files first for caching
+COPY pyproject.toml uv.lock ./
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies using uv (fast and reliable)
+RUN uv sync --frozen --no-cache
 
-# Copy the application code
+# Copy the rest of the application
 COPY . .
 
 # Set environment variable for Redis
-ENV REDIS_HOST=localhost
+ENV REDIS_HOST=redis
 
-# Start the worker
-CMD ["python", "worker.py"]
+# Start the worker using uv to ensure the correct environment
+CMD ["uv", "run", "worker.py"]

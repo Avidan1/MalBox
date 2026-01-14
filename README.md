@@ -25,6 +25,7 @@ The system is built with a **decoupled, microservices-oriented architecture** to
 - Docker Desktop (with WSL2 backend on Windows)
 - Python 3.13+
 - Redis (Handled via Docker Compose)
+- uv
 
 ### Installation & Running
 1. **Clone the repository:**
@@ -36,9 +37,7 @@ The system is built with a **decoupled, microservices-oriented architecture** to
 2. **Set up the backend:**
     ```
     cd backend
-    python -m venv venv
-    source venv/bin/activate  # Or .\venv\Scripts\activate on Windows
-    pip install -r requirements.txt
+    uv sync
     ```
 3. **Launch Infrastructure:** Using Docker Compose to spin up Redis and the Worker:
     ```
@@ -46,7 +45,7 @@ The system is built with a **decoupled, microservices-oriented architecture** to
     ```
 4. **Start the API:**
     ```
-    python main.py
+    uv run main.py
     ```
 
 ## 🗺 Roadmap & Future Development
