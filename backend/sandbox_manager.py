@@ -2,7 +2,8 @@ import docker
 import uuid
 
 client = docker.from_env()
-# BASE START SCAN ONLY PYTHON FILES
+
+# TODO: Current scope is limited to Python file analysis. Expand sandbox capabilities to support additional file types and executables.
 def run_in_sandbox(host_path: str):
     """
     host_path is the absolute path on the Windows Host
